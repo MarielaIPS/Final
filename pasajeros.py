@@ -6,7 +6,7 @@ class Pasajeros:
         self.nombre = nombre
         self.dni = dni
         self.nac = nac
-        self.equipaje={} # cree la funcion para agregar equipaje
+        self.equipaje={} 
         self.h_vuelos = []
 
     def __str__(self):
