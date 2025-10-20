@@ -18,7 +18,7 @@ while (opcion >= 1 and opcion <= 3):
     if (opcion == 1):
         nomape = input("ingrese nombre y apellido del pasajero: ")
         dni = input("ingrese documento del pasajero: ")
-        nacionalidad = input("ingrese nobre y apellido del pasajero: ")
+        nacionalidad = input("ingrese la nacionalidad del pasajero: ")
         p1 = Pasajeros(nomape, dni, nacionalidad)
    
     if (opcion == 2):
