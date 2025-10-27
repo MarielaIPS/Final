@@ -30,11 +30,11 @@ while (opcion >= 1 and opcion <= 3):
 p1 = Pasajero('Matias', 30459, 'arg')
 p2 = Pasajero('PEDRITO', 9999, 'arg')
 
-#print(p)
+
 p1.agregar_equipaje("De mano",1)
 p1.agregar_equipaje("De cabina",9)
 
-#print(p.equipaje)
+
 
 
 brasil = Vuelo('br101', 'BsAs', 'Brasilia', '17/10/2025')
@@ -46,5 +46,31 @@ brasil.agregar_pasajero(p2)
 print(brasil._cupo)
 
 brasil.mostrar_pasajeros()
-#print(reserva1)
-#print(reserva1.codigo)
+
+
+
+p = Pasajero('matias', 30459, 'arg')
+
+p.agregar_equipaje("De mano",1)
+p.agregar_equipaje("De cabina",2)
+p.agregar_equipaje("De bodega",4)
+p.agregar_equipaje("De bodega",1)
+print(p.equipaje)
+
+print("La cantidad de equipaje en total es: " ,p.total_equipaje_cantidad)
+
+
+p.eliminar_equipaje("De bodega",2)
+
+
+p.total_kilos()
+
+p.total_en_kilos
+
+p.Agregar_vuelo("maiameeeeee")
+p.Agregar_vuelo("newzeland")
+
+print(p.h_vuelos)
+
+p.eliminar_vuelo("newzeland")
+print(p.h_vuelos)
