@@ -27,6 +27,7 @@ while (opcion >= 1 and opcion <= 3):
     if (opcion == 3):
         pass
 
+p0=Pasajero("Juana",9899898,"arg")
 p1 = Pasajero('Matias', 30459, 'arg')
 p2 = Pasajero('PEDRITO', 9999, 'arg')
 
@@ -40,16 +41,19 @@ p1.agregar_equipaje("De cabina",9)
 brasil = Vuelo('br101', 'BsAs', 'Brasilia', '17/10/2025')
 reserva1 = Reserva(p1, brasil)
 
+brasil.agregar_pasajero(p0)
 brasil.agregar_pasajero(p1)
 brasil.agregar_pasajero(p2)
 
-print(brasil._cupo)
+
+print("Los cupos disponibles en este vuelo son: ",brasil._cupo)
+
 
 brasil.mostrar_pasajeros()
 
 
 
-p = Pasajero('matias', 30459, 'arg')
+p = Pasajero('LORENZO', 387765, 'arg')
 
 p.agregar_equipaje("De mano",1)
 p.agregar_equipaje("De cabina",2)
@@ -74,3 +78,7 @@ print(p.h_vuelos)
 
 p.eliminar_vuelo("newzeland")
 print(p.h_vuelos)
+
+print(brasil.buscar_pasajero_binaria(p))
+
+brasil.mostrar_pasajeros()

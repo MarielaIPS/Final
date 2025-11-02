@@ -1,27 +1,41 @@
-
 class Vuelo:
-    def __init__(self, codigo, origen,destino, fecha):
-        self.codigo =codigo
+    def __init__(self, codigo, origen, destino, fecha):
+        self.codigo = codigo
         self.origen = origen
         self.destino = destino
         self.fecha = fecha
-        self._pasajeros = [] #privada la lista de pasajeros para que no se pueda acceder desde el atributo
+        self._pasajeros =[]  # privada la lista de pasajeros para que no se pueda acceder desde el atributo
         self._cupo = 100
 
-    def agregar_pasajero(self,pasajero):
-    # agrega a la lista el pasajero y quita 1 cupo, Pasa a todo el objeto pasajero
-        if pasajero not in self._pasajeros and self._cupo >0 and self._cupo <= 100 : 
+    def agregar_pasajero(self, pasajero):
+        # agrega a la lista el pasajero y quita 1 cupo, Pasa a todo el objeto pasajero
+        if pasajero not in self._pasajeros and self._cupo > 0 and self._cupo <= 100:
             self._pasajeros.append(pasajero)
-            self._cupo-=1
+            self._cupo -= 1
+            self._pasajeros.sort()  # para que los pasajeros esten ordenados por dni
         else:
-            print("el pasajero ya se encuentra o se supero el limite en este viaje")   
-    
+            print("el pasajero ya se encuentra o se supero el limite en este viaje")
+
     def mostrar_pasajeros(self):
         print("Los pasajeros en este vuelo son:")
-        for i in   self._pasajeros:
-            print(i.nombre,i.dni)      
-              
-    
-    
+        for i in self._pasajeros:
+            print(i.nombre, i.dni)
+
+    def buscar_pasajero_binaria(self, pasajero):
+        izquierda = 0
+        derecha = len(self._pasajeros) - 1
+
+        while izquierda <= derecha:
+            medio = (izquierda + derecha) // 2
+            actual = self._pasajeros[medio]  # Para poder hacer la comparacion
+
+            if actual == pasajero:
+                return f"Pasajero encontrado: {actual.nombre} (DNI: {actual.dni})"
+            elif actual > pasajero:
+                derecha = medio - 1
+            else:
+                izquierda = medio + 1
+        return "El pasajero no se encuentra en el vuelo."
+
     def __str__(self):
-        return f'codigo: {self.codigo} \norigen: {self.origen} \nDestino:{self.destino} \nFecha: {self.fecha}'
+        return f"codigo: {self.codigo} \norigen: {self.origen} \nDestino:{self.destino} \nFecha: {self.fecha}"

@@ -12,8 +12,18 @@ class Pasajero:
 
     def __str__(self):
       return f'Nombre: {self.nombre} \nDNI: {self.dni} \nNac:{self.nac} \n Equipaje: {self.total_equipaje_cantidad} cantidad'
+      
+    #los M.magicos se implementan para que luego la clase vuelo ordene los pasajeros y tambien  realice la busqueda binaria por DNI
+    def __lt__(self, other): 
+        return self.dni < other.dni
 
-
+    def __gt__(self, other): 
+        return self.dni > other.dni
+      
+    def __eq__(self, other):
+       return self.dni == other.dni
+     
+    
     def sumatotal_cantidad(self):
       '''funcion que suma los valores del diccionario sirve para que cada vez que se agregue un equipaje la variable total cantidad se actualice'''
       total=sum(self.equipaje.values())
