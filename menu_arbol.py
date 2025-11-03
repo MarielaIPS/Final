@@ -61,18 +61,21 @@ def crear_pasajero():
 def listar_pasajeros():
     print("\n--- LISTADO DE PASAJEROS ---")
     arbol_pasajeros.mostrar_inorden()
-"""
-def menu_cargar_csv():
+
+
+def menu_buscar_pasajero():
     os.system("cls" if os.name == "nt" else "clear")
-    print("=== CARGAR PASAJEROS DESDE CSV ===")
-    ruta = input("Ingrese la ruta completa del archivo CSV: ")
-    try:
-        cargar_pasajeros_csv(ruta, arbol_pasajeros)
-        print("\n✅ Archivo cargado correctamente.")
-    except Exception as e:
-        print(f"\n❌ Error al cargar el archivo: {e}")
+    print("=== BUSCAR PASAJERO ===")
+    dni = int(input("Ingrese DNI: "))
+    pasajero = arbol_pasajeros.buscar(dni)
+    if pasajero:
+        encabezado=(f"{'Nombre'.ljust(20)} | {'DNI'.ljust(10)} | {'Nacionalidad'.ljust(15)} | {'Equipaje'.ljust(8)} | {'Peso total'.ljust(8)}")
+        print("\n✅ Pasajero encontrado:\n", encabezado," \n", pasajero)
+    else:
+        print("\n❌ No se encontró ningún pasajero con ese DNI.")
     input("Presione Enter para continuar...")
-"""
+
+
 def crear_vuelo():
     codigo = input("Código del vuelo: ")
     origen = input("Origen: ")
@@ -170,27 +173,27 @@ def menu_equipaje():
         print(f"✅ Equipaje '{bulto}' agregado correctamente. Total: {pasajero.total_equipaje_cantidad}")
         input("Presione Enter para continuar...")
 
-# ===============================
-#   CONSTRUCCIÓN DEL ÁRBOL
-# ===============================
+
+# Construye menú principal
 menu_principal = NodoMenu("MENÚ PRINCIPAL")
 
-# Submenú PASAJEROS
+# Submenú pasajeros
 pasajeros = NodoMenu("Gestión de pasajeros")
 pasajeros.agregar_submenu(NodoMenu("Crear pasajero", crear_pasajero))
 pasajeros.agregar_submenu(NodoMenu("Listar pasajeros", listar_pasajeros))
+pasajeros.agregar_submenu(NodoMenu("Buscar pasajero por DNI", menu_buscar_pasajero))
 
-# submenu de equipaje
+# Submenú equipaje
 equipaje = NodoMenu("Gestión de Equipaje")
 equipaje.agregar_submenu(NodoMenu("Agregar equipaje a pasajero", menu_equipaje))
 
 
-# Submenú VUELOS
+# Submenú vuelos
 vuelos_menu = NodoMenu("Gestión de vuelos")
 vuelos_menu.agregar_submenu(NodoMenu("Crear vuelo", crear_vuelo))
 vuelos_menu.agregar_submenu(NodoMenu("Listar vuelos", listar_vuelos))
 
-# Submenú RESERVAS
+# Submenú reservas
 reservas_menu = NodoMenu("Gestión de reservas")
 reservas_menu.agregar_submenu(NodoMenu("Crear reserva", reservar_vuelo))
 reservas_menu.agregar_submenu(NodoMenu("Listar reservas", listar_reservas))
@@ -201,9 +204,7 @@ menu_principal.agregar_submenu(equipaje)
 menu_principal.agregar_submenu(vuelos_menu)
 menu_principal.agregar_submenu(reservas_menu)
 
-# ===============================
-#   EJECUTAR MENÚ
-# ===============================
+# Ejecuta menú
 def iniciar_menu(arbol):
     global arbol_pasajeros
     arbol_pasajeros = arbol

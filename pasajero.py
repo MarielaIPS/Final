@@ -13,7 +13,7 @@ class Pasajero:
         self.h_vuelos = []
 
     def __str__(self):
-        return f'Nombre: {self.nombre} | DNI: {self.dni} | Nacionalidad: {self.nac} | Equipaje total: {self.total_equipaje_cantidad}'
+        return f' {self.nombre} | {self.dni} | {self.nac} | {self.total_equipaje_cantidad} | {self.total_en_kilos}'
 
     def sumatotal_cantidad(self):
         return sum(self.equipaje.values())
@@ -39,6 +39,24 @@ class Pasajero:
         else:
             print("Cantidad inválida o tipo no encontrado.")
 
+    def total_kilos(self):
+      de_mano = 5
+      de_cabina = 10
+      de_bodega = 15
+      total_general=0
+      for clave, valor in self.equipaje.items():
+        if clave == "De mano":
+          sub_total = valor * de_mano
+          total_general+= sub_total
+        elif clave == "De cabina":
+          sub_total = valor * de_cabina
+          total_general+= sub_total
+        elif clave == "De bodega":
+          sub_total = valor * de_bodega
+          total_general+= sub_total
+        print(clave, sub_total)
+        self.total_en_kilos=total_general
+      print("Este es el total general de kilos ", total_general)
 
 class NodoArbol:
     def __init__(self, pasajero):
@@ -189,15 +207,22 @@ class ArbolPasajeros:
             if nodo is None:
                 print("No hay pasajeros cargados.")
                 return
+        # Imprimir encabezado una sola vez
+        print(f"{'Nombre'.ljust(20)} | {'DNI'.ljust(10)} | {'Nacionalidad'.ljust(15)} | {'Equipaje'.ljust(8)} | {'Peso total'.ljust(8)}")
+        print("-" * 70)
+        self._contador =0
         self._mostrar_inorden_rec(nodo)
+        print("-" * 70)
+        print(f"Total de pasajeros: {self._contador}")
 
     def _mostrar_inorden_rec(self, nodo):
         if nodo is None:
             return
         self._mostrar_inorden_rec(nodo.izq)
-        print(nodo.pasajero)
+        p = nodo.pasajero
+        print(f"{p.nombre.ljust(20)} | {str(p.dni).ljust(10)} | {p.nac.ljust(15)} | {str(p.total_equipaje_cantidad).ljust(8)} | {str(p.total_en_kilos).ljust(8)}")
+        self._contador +=1
         self._mostrar_inorden_rec(nodo.der)
-
 
 def cargar_pasajeros_csv(ruta, arbol):
     with open(ruta, newline='', encoding='utf-8') as f:
