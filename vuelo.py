@@ -1,10 +1,11 @@
 
 class Vuelo:
-    def __init__(self, codigo, origen,destino, fecha):
-        self.codigo =codigo
+    def __init__(self, origen, destino,  duracion):
+        #self.codigo =codigo
         self.origen = origen
         self.destino = destino
-        self.fecha = fecha
+        #self.fecha = fecha
+        self.duracion = duracion
         self._pasajeros = [] #privada la lista de pasajeros para que no se pueda acceder desde el atributo
         self._cupo = 100
 
