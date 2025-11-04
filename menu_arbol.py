@@ -1,6 +1,7 @@
 from vuelo import Vuelo
 from reserva import Reserva
 from pasajero import Pasajero, ArbolPasajeros, cargar_pasajeros_csv
+from grafos_vuelos import mostrar_aeropuertos, vuelos
 import os
 
 # ===============================
@@ -41,8 +42,8 @@ class NodoMenu:
 # ===============================
 #   OBJETOS GLOBALES DE TRABAJO
 # ===============================
-arbol_pasajeros = ArbolPasajeros()
-vuelos = []
+#arbol_pasajeros = ArbolPasajeros()
+
 reservas = []
 
 
@@ -55,7 +56,7 @@ def crear_pasajero():
     nac = input("Nacionalidad: ")
     pasajero = Pasajero(dni, nombre, nac)
     arbol_pasajeros.insertar(pasajero)
-    print("✅ Pasajero creado e insertado en el árbol.")
+    print("--Pasajero creado e insertado en el árbol.")
 
 
 def listar_pasajeros():
@@ -76,24 +77,15 @@ def menu_buscar_pasajero():
     input("Presione Enter para continuar...")
 
 
-def crear_vuelo():
-    codigo = input("Código del vuelo: ")
-    origen = input("Origen: ")
-    destino = input("Destino: ")
-    fecha = input("Fecha (dd/mm/aaaa): ")
-    vuelo = Vuelo(codigo, origen, destino, fecha)
-    vuelos.append(vuelo)
-    print("✅ Vuelo creado.")
+
 
 
 def listar_vuelos():
-    print("\n--- LISTADO DE VUELOS ---")
-    if not vuelos:
-        print("No hay vuelos registrados.")
-        return
-    for v in vuelos:
-        print(v)
-        print("-" * 30)
+    print("---------------------------------------\n")
+    print("---Lista de vuelos disponibles:\n")
+    for i, aeropuerto in enumerate(vuelos ,1):
+        print(f"{i:2d}. {aeropuerto}")
+    print("---------------------------------------")
 
 
 def reservar_vuelo():
@@ -109,7 +101,8 @@ def reservar_vuelo():
 
     print("\nVuelos disponibles:")
     for i, v in enumerate(vuelos, 1):
-        print(f"{i}. {v.codigo} - {v.origen} → {v.destino} ({v.fecha})")
+        #print(f"{i}. {v.codigo} - {v.origen} → {v.destino} ({v.fecha})")
+        print(f"{i}.  - {v.origen} → {v.destino} ")
 
     opcion = int(input("Seleccione vuelo: ")) - 1
     vuelo = vuelos[opcion]
@@ -190,8 +183,8 @@ equipaje.agregar_submenu(NodoMenu("Agregar equipaje a pasajero", menu_equipaje))
 
 # Submenú vuelos
 vuelos_menu = NodoMenu("Gestión de vuelos")
-vuelos_menu.agregar_submenu(NodoMenu("Crear vuelo", crear_vuelo))
 vuelos_menu.agregar_submenu(NodoMenu("Listar vuelos", listar_vuelos))
+vuelos_menu.agregar_submenu(NodoMenu("Listar Aeropuertos", mostrar_aeropuertos))
 
 # Submenú reservas
 reservas_menu = NodoMenu("Gestión de reservas")

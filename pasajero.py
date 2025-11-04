@@ -25,7 +25,7 @@ class Pasajero:
 
         nuevo_total = self.total_equipaje_cantidad + cantidad
         if nuevo_total > 10:
-            print("❌ Supera el máximo de 10 equipajes.")
+            print("Supera el máximo de 10 equipajes.")
             return
 
         self.equipaje[tipo] = self.equipaje.get(tipo, 0) + cantidad
@@ -109,7 +109,7 @@ class ArbolPasajeros:
         elif pasajero.dni > nodo.pasajero.dni:
             nodo.der = self._insertar(nodo.der, pasajero)
         else:
-            print("⚠️ DNI duplicado, no se insertó.")
+            print("DNI duplicado, no se insertó.")
             return nodo
 
         nodo.altura = 1 + max(self._altura(nodo.izq), self._altura(nodo.der))

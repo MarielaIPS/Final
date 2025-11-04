@@ -46,7 +46,7 @@ def obtener_ruta(predecesores, destino):
     return ruta
 
 #muestra la lista de aeropuertos apartir del grafo
-def mostrar_aeropuertos(grafo):
+def mostrar_aeropuertos():
     print("---------------------------------------\n")
     print("---Lista de aeropuertos disponibles:\n")
     for i, aeropuerto in enumerate(sorted(grafo.keys()), 1):
@@ -58,18 +58,18 @@ def mostrar_aeropuertos(grafo):
 vuelos = [
     # Sudamérica
     Vuelo("Buenos Aires (Ezeiza)", "Santiago de Chile", 120),
-    Vuelo("Santiago de Chile", "Buenos Aires (Ezeiza)", 135),  # viento en contra
+    Vuelo("Santiago de Chile", "Buenos Aires (Ezeiza)", 140),  # viento en contra
     Vuelo("Buenos Aires (Ezeiza)", "São Paulo (Guarulhos)", 160),
-    Vuelo("São Paulo (Guarulhos)", "Buenos Aires (Ezeiza)", 175),
+    Vuelo("São Paulo (Guarulhos)", "Buenos Aires (Ezeiza)", 180),
     Vuelo("Santiago de Chile", "São Paulo (Guarulhos)", 190),
-    Vuelo("São Paulo (Guarulhos)", "Santiago de Chile", 205),
+    Vuelo("São Paulo (Guarulhos)", "Santiago de Chile", 210),
 
     # América del Sur → América del Norte
     Vuelo("Buenos Aires (Ezeiza)", "Miami (EE.UU.)", 530),   # oeste→este (más corto)
     Vuelo("Buenos Aires (Ezeiza)", "Ciudad de México", 500),  
     Vuelo("Miami (EE.UU.)", "Buenos Aires (Ezeiza)", 600),  # este→oeste (más largo)
     Vuelo("São Paulo (Guarulhos)", "Miami (EE.UU.)", 510),
-    Vuelo("Miami (EE.UU.)", "São Paulo (Guarulhos)", 565),
+    Vuelo("Miami (EE.UU.)", "São Paulo (Guarulhos)", 570),
     Vuelo("Miami (EE.UU.)", "Atlanta (EE.UU.)", 120),
     Vuelo("Atlanta (EE.UU.)", "Nueva York (JFK)", 140),
 
@@ -77,7 +77,7 @@ vuelos = [
     Vuelo("Nueva York (JFK)", "Londres (Heathrow)", 400),   # oeste→este
     Vuelo("Londres (Heathrow)", "Nueva York (JFK)", 460),   # este→oeste
     Vuelo("Londres (Heathrow)", "París (Charles de Gaulle)", 70),
-    Vuelo("París (Charles de Gaulle)", "Frankfurt (Alemania)", 65),
+    Vuelo("París (Charles de Gaulle)", "Frankfurt (Alemania)", 70),
     Vuelo("Frankfurt (Alemania)", "Dubái (Emiratos Árabes Unidos)", 370),
     Vuelo("Dubái (Emiratos Árabes Unidos)", "Frankfurt (Alemania)", 410),
 
@@ -86,10 +86,10 @@ vuelos = [
     Vuelo("Tokio (Haneda)", "Londres (Heathrow)", 740),   # este→oeste
     Vuelo("Tokio (Haneda)", "Hong Kong (China)", 230),
     Vuelo("Hong Kong (China)", "Singapur (Changi)", 210),
-    Vuelo("Singapur (Changi)", "Hong Kong (China)", 235),
+    Vuelo("Singapur (Changi)", "Hong Kong (China)", 240),
     Vuelo("Singapur (Changi)", "Doha (Qatar)", 440),
-    Vuelo("Doha (Qatar)", "Dubái (Emiratos Árabes Unidos)", 65),
-    Vuelo("Dubái (Emiratos Árabes Unidos)", "Doha (Qatar)", 75),
+    Vuelo("Doha (Qatar)", "Dubái (Emiratos Árabes Unidos)", 70),
+    Vuelo("Dubái (Emiratos Árabes Unidos)", "Doha (Qatar)", 80),
 
     # Asia ↔ Oceanía
     Vuelo("Tokio (Haneda)", "Sídney (Australia)", 590),
@@ -98,19 +98,19 @@ vuelos = [
     # Asia ↔ América
     Vuelo("Tokio (Haneda)", "Los Ángeles (EE.UU.)", 530),   # oeste→este (más corto)
     Vuelo("Los Ángeles (EE.UU.)", "Tokio (Haneda)", 610),   # este→oeste (más largo)
-    Vuelo("Los Ángeles (EE.UU.)", "Ciudad de México", 225),
+    Vuelo("Los Ángeles (EE.UU.)", "Ciudad de México", 230),
     Vuelo("Ciudad de México", "Los Ángeles (EE.UU.)", 240),
 
     # África ↔ Europa
     Vuelo("Johannesburgo (Sudáfrica)", "Londres (Heathrow)", 590),
+    Vuelo("Johannesburgo (Sudáfrica)", "Miami (EE.UU.)", 590),
     Vuelo("Londres (Heathrow)", "Johannesburgo (Sudáfrica)", 640),
 ]
 
 # Construye el grafo
 grafo = construir_grafo(vuelos)
-
 # Ejecuta Dijkstra
-duracion, predecesores = dijkstra(grafo, "Johannesburgo (Sudáfrica)")
+duracion, predecesores = dijkstra(grafo, "Buenos Aires (Ezeiza)")
 
 # Obtener mejor ruta 
 def calcular_vuelo(destino):
@@ -120,6 +120,8 @@ def calcular_vuelo(destino):
     horas = minutos // 60
     minutos_restantes = minutos % 60
     return print(f"Duracion total: {horas}h {minutos_restantes:02d}m")
+    
 
-calcular_vuelo("Ciudad de México")
-mostrar_aeropuertos(grafo)
+# calcular_vuelo("Sídney (Australia)")
+# print(grafo)
+

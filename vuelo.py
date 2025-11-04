@@ -25,4 +25,5 @@ class Vuelo:
     
     
     def __str__(self):
-        return f'codigo: {self.codigo} \norigen: {self.origen} \nDestino:{self.destino} \nFecha: {self.fecha}'
+        #return f'codigo: {self.codigo} \norigen: {self.origen} \nDestino:{self.destino} \nFecha: {self.fecha}'
+        return f'Origen: {self.origen} → Destino: {self.destino} (Duracion: {self.duracion})'
