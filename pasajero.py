@@ -13,7 +13,7 @@ class Pasajero:
         self.h_vuelos = []
 
     def __str__(self):
-        return f' {self.nombre} | {self.dni} | {self.nac} | {self.total_equipaje_cantidad} | {self.total_en_kilos}'
+        return f"{self.nombre.ljust(20)} | {str(self.dni).ljust(10)} | {self.nac.ljust(15)} | {str(self.total_equipaje_cantidad).ljust(8)} | {str(self.total_en_kilos).ljust(8)}"
 
     def sumatotal_cantidad(self):
         return sum(self.equipaje.values())
