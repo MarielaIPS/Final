@@ -13,7 +13,7 @@ class Pasajero:
         self.h_vuelos = []
 
     def __str__(self):
-        return f"{self.nombre.ljust(20)} | {str(self.dni).ljust(10)} | {self.nac.ljust(15)} | {str(self.total_equipaje_cantidad).ljust(8)} | {str(self.total_en_kilos).ljust(8)}"
+        return f"{self.nombre.ljust(20)} | {str(self.dni).ljust(10)} | {self.nac.ljust(15)} | {str(self.total_equipaje_cantidad).ljust(8)} | {str(self.total_kilos()).ljust(8)}"
 
     def sumatotal_cantidad(self):
         return sum(self.equipaje.values())
@@ -54,9 +54,8 @@ class Pasajero:
         elif clave == "De bodega":
           sub_total = valor * de_bodega
           total_general+= sub_total
-        print(clave, sub_total)
         self.total_en_kilos=total_general
-      print("Este es el total general de kilos ", total_general)
+      return  total_general
 
 class NodoArbol:
     def __init__(self, pasajero):
@@ -220,7 +219,7 @@ class ArbolPasajeros:
             return
         self._mostrar_inorden_rec(nodo.izq)
         p = nodo.pasajero
-        print(f"{p.nombre.ljust(20)} | {str(p.dni).ljust(10)} | {p.nac.ljust(15)} | {str(p.total_equipaje_cantidad).ljust(8)} | {str(p.total_en_kilos).ljust(8)}")
+        print(f"{p.nombre.ljust(20)} | {str(p.dni).ljust(10)} | {p.nac.ljust(15)} | {str(p.total_equipaje_cantidad).ljust(8)} | {str(p.total_kilos()).ljust(8)}")
         self._contador +=1
         self._mostrar_inorden_rec(nodo.der)
 
