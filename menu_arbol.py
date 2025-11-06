@@ -1,7 +1,7 @@
-from vuelo import Vuelo
-from reserva import Reserva
-from pasajero import Pasajero, ArbolPasajeros, cargar_pasajeros_csv
-from grafos_vuelos import mostrar_aeropuertos, vuelos
+from reserva import Reserva, reservas, reservar_vuelo, cancelar_reserva
+from pasajero import Pasajero, agregar_pasajero_csv
+from grafos_vuelos import mostrar_aeropuertos, vuelos, grafo, mostrar_aeropuertos
+from app_context import arbol_pasajeros
 import os
 
 
@@ -44,7 +44,7 @@ class NodoMenu:
 
 #arbol_pasajeros = ArbolPasajeros()
 
-reservas = []
+#reservas = []
 
 
 
@@ -57,6 +57,8 @@ def crear_pasajero():
     pasajero = Pasajero(dni, nombre, nac)
     arbol_pasajeros.insertar(pasajero)
     print("--Pasajero creado e insertado en el árbol.")
+    ruta = r"pasajeros.csv"
+    agregar_pasajero_csv(dni, nombre, nac, ruta)
 
 
 def listar_pasajeros():
@@ -74,10 +76,7 @@ def menu_buscar_pasajero():
         print("\nPasajero encontrado:\n", encabezado," \n", pasajero)
     else:
         print("\nNo se encontró ningún pasajero con ese DNI.")
-    input("Presione Enter para continuar...")
-
-
-
+    
 
 
 def listar_vuelos():
@@ -87,29 +86,6 @@ def listar_vuelos():
         print(f"{i:2d}. {aeropuerto}")
     print("---------------------------------------")
 
-
-def reservar_vuelo():
-    dni = int(input("DNI del pasajero: "))
-    pasajero = arbol_pasajeros.buscar(dni)
-    if not pasajero:
-        print("Pasajero no encontrado.")
-        return
-
-    if not vuelos:
-        print("No hay vuelos disponibles.")
-        return
-
-    print("\nVuelos disponibles:")
-    for i, v in enumerate(vuelos, 1):
-        #print(f"{i}. {v.codigo} - {v.origen} → {v.destino} ({v.fecha})")
-        print(f"{i}.  - {v.origen} → {v.destino} ")
-
-    opcion = int(input("Seleccione vuelo: ")) - 1
-    vuelo = vuelos[opcion]
-    vuelo.agregar_pasajero(pasajero)
-    reserva = Reserva(pasajero, vuelo)
-    reservas.append(reserva)
-    print(f"Reserva creada. Código: {reserva.codigo}")
 
 
 def listar_reservas():
@@ -144,7 +120,7 @@ def menu_equipaje():
         try:
             opc = int(input("Ingrese una opción: "))
         except ValueError:
-            print("⚠️ Opción inválida.")
+            print("Opción inválida.")
             continue
 
         if opc == 0:
@@ -164,7 +140,7 @@ def menu_equipaje():
 
         pasajero.agregar_equipaje(bulto, cant_bulto)
         print(f"Equipaje '{bulto}' agregado correctamente. Total: {pasajero.total_equipaje_cantidad}")
-        input("Presione Enter para continuar...")
+        
 
 
 # Construye menú principal
@@ -189,7 +165,7 @@ vuelos_menu.agregar_submenu(NodoMenu("Listar Aeropuertos", mostrar_aeropuertos))
 # Submenú reservas
 reservas_menu = NodoMenu("Gestión de reservas")
 reservas_menu.agregar_submenu(NodoMenu("Crear reserva", reservar_vuelo))
-reservas_menu.agregar_submenu(NodoMenu("Eliminar reserva", reservar_vuelo))
+reservas_menu.agregar_submenu(NodoMenu("Eliminar reserva", cancelar_reserva))
 reservas_menu.agregar_submenu(NodoMenu("Listar reservas", listar_reservas))
 
 # Armar árbol principal
@@ -199,7 +175,6 @@ menu_principal.agregar_submenu(vuelos_menu)
 menu_principal.agregar_submenu(reservas_menu)
 
 # Ejecuta menú
-def iniciar_menu(arbol):
+def iniciar_menu():
     global arbol_pasajeros
-    arbol_pasajeros = arbol
     menu_principal.ejecutar()

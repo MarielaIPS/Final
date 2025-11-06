@@ -1,6 +1,5 @@
 import csv
 import os
-#from main import arbol
 
 class Pasajero:
     def __init__(self, dni, nombre, nac):
@@ -40,22 +39,22 @@ class Pasajero:
             print("Cantidad inválida o tipo no encontrado.")
 
     def total_kilos(self):
-      de_mano = 5
-      de_cabina = 10
-      de_bodega = 15
-      total_general=0
-      for clave, valor in self.equipaje.items():
-        if clave == "De mano":
-          sub_total = valor * de_mano
-          total_general+= sub_total
-        elif clave == "De cabina":
-          sub_total = valor * de_cabina
-          total_general+= sub_total
-        elif clave == "De bodega":
-          sub_total = valor * de_bodega
-          total_general+= sub_total
-        self.total_en_kilos=total_general
-      return  total_general
+        de_mano = 5
+        de_cabina = 10
+        de_bodega = 15
+        total_general=0
+        for clave, valor in self.equipaje.items():
+            if clave == "De mano":
+                sub_total = valor * de_mano
+                total_general+= sub_total
+            elif clave == "De cabina":
+                sub_total = valor * de_cabina
+                total_general+= sub_total
+            elif clave == "De bodega":
+                sub_total = valor * de_bodega
+                total_general+= sub_total
+            self.total_en_kilos=total_general
+        return  total_general
 
 class NodoArbol:
     def __init__(self, pasajero):
@@ -69,9 +68,8 @@ class ArbolPasajeros:
     def __init__(self):
         self.raiz = None
 
-    # -------------------------
-    # Métodos utilitarios AVL
-    # -------------------------
+# funciones para mantener el arbol binario balanceado
+
     def _altura(self, nodo):
         return nodo.altura if nodo else 0
 
@@ -96,9 +94,8 @@ class ArbolPasajeros:
         y.altura = 1 + max(self._altura(y.izq), self._altura(y.der))
         return y
 
-    # -------------------------
-    # Inserción balanceada
-    # -------------------------
+# Inserción balanceada
+
     def _insertar(self, nodo, pasajero):
         if not nodo:
             return NodoArbol(pasajero)
@@ -114,7 +111,7 @@ class ArbolPasajeros:
         nodo.altura = 1 + max(self._altura(nodo.izq), self._altura(nodo.der))
         balance = self._balance(nodo)
 
-        # Rotaciones
+    # Rotaciones
         if balance > 1 and pasajero.dni < nodo.izq.pasajero.dni:
             return self._rotar_derecha(nodo)
         if balance < -1 and pasajero.dni > nodo.der.pasajero.dni:
@@ -131,9 +128,7 @@ class ArbolPasajeros:
     def insertar(self, pasajero):
         self.raiz = self._insertar(self.raiz, pasajero)
 
-    # -------------------------
-    # Búsqueda por DNI
-    # -------------------------
+# Búsqueda por DNI
     def _buscar(self, nodo, dni):
         if not nodo:
             return None
@@ -147,9 +142,8 @@ class ArbolPasajeros:
     def buscar(self, dni):
         return self._buscar(self.raiz, dni)
 
-    # -------------------------
-    # Eliminación balanceada
-    # -------------------------
+# Eliminación balanceada
+
     def _nodo_minimo(self, nodo):
         actual = nodo
         while actual.izq:
@@ -165,22 +159,22 @@ class ArbolPasajeros:
         elif dni > nodo.pasajero.dni:
             nodo.der = self._eliminar(nodo.der, dni)
         else:
-            # Nodo encontrado
+        # Nodo encontrado
             if not nodo.izq:
                 return nodo.der
             elif not nodo.der:
                 return nodo.izq
 
-            # Nodo con dos hijos
+        # Nodo con dos hijos
             sucesor = self._nodo_minimo(nodo.der)
             nodo.pasajero = sucesor.pasajero
             nodo.der = self._eliminar(nodo.der, sucesor.pasajero.dni)
 
-        # Actualizar altura
+    # Actualizar altura
         nodo.altura = 1 + max(self._altura(nodo.izq), self._altura(nodo.der))
         balance = self._balance(nodo)
 
-        # Rotaciones necesarias
+    # Rotaciones necesarias
         if balance > 1 and self._balance(nodo.izq) >= 0:
             return self._rotar_derecha(nodo)
         if balance > 1 and self._balance(nodo.izq) < 0:
@@ -197,16 +191,14 @@ class ArbolPasajeros:
     def eliminar(self, dni):
         self.raiz = self._eliminar(self.raiz, dni)
 
-    # -------------------------
-    # Recorrido inorden (ordenado por DNI)
-    # -------------------------
+# Recorrido inorden (ordenado por DNI)
     def mostrar_inorden(self, nodo=None):
         if nodo is None:
             nodo = self.raiz
             if nodo is None:
                 print("No hay pasajeros cargados.")
                 return
-        # Imprimir encabezado una sola vez
+    # Imprimir encabezado una sola vez
         print(f"{'Nombre'.ljust(20)} | {'DNI'.ljust(10)} | {'Nacionalidad'.ljust(15)} | {'Equipaje'.ljust(8)} | {'Peso total'.ljust(8)}")
         print("-" * 70)
         self._contador =0
@@ -236,3 +228,23 @@ def cargar_pasajeros_csv(ruta, arbol):
                 arbol.insertar(pasajero)
             except (ValueError, IndexError):
                 print(f"Fila inválida: {fila}")
+
+
+def agregar_pasajero_csv(dni, nombre, nacionalidad, ruta_archivo):
+    archivo_existe = os.path.isfile(ruta_archivo)
+    with open(ruta_archivo, mode="a", newline='', encoding="utf-8") as archivo:
+        campos = ["DNI", "Nombre_y_Apellido", "Nacionalidad"]
+        writer = csv.DictWriter(archivo, fieldnames=campos)
+
+        # Solo escribe encabezado si el archivo recién se crea
+        if not archivo_existe:
+            writer.writeheader()
+
+        writer.writerow({
+            "DNI": dni,
+            "Nombre_y_Apellido": nombre,
+            "Nacionalidad": nacionalidad
+        })
+
+    print(f"Pasajero '{nombre}' agregado correctamente al archivo.")
+    input("pulse ENTER para continuar")
