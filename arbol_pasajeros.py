@@ -161,37 +161,3 @@ class ArbolPasajeros:
         print(f"{p.nombre.ljust(20)} | {str(p.dni).ljust(10)} | {p.nac.ljust(15)} | {str(p.total_equipaje_cantidad).ljust(8)} | {str(p.total_kilos()).ljust(8)}")
         self._contador +=1
         self._mostrar_inorden_rec(nodo.der)
-
-def cargar_pasajeros_csv(ruta, arbol):
-    with open(ruta, newline='', encoding='utf-8') as f:
-        lector = csv.reader(f)
-        next(lector)  # saltar encabezado
-        for fila in lector:
-            try:
-                dni = int(fila[0].strip())
-                nombre = fila[1].strip()
-                nac = fila[2].strip()
-                pasajero = Pasajero(dni, nombre, nac)
-                arbol.insertar(pasajero)
-            except (ValueError, IndexError):
-                print(f"Fila inválida: {fila}")
-
-
-def agregar_pasajero_csv(dni, nombre, nacionalidad, ruta_archivo):
-    archivo_existe = os.path.isfile(ruta_archivo)
-    with open(ruta_archivo, mode="a", newline='', encoding="utf-8") as archivo:
-        campos = ["DNI", "Nombre_y_Apellido", "Nacionalidad"]
-        writer = csv.DictWriter(archivo, fieldnames=campos)
-
-        # Solo escribe encabezado si el archivo recién se crea
-        if not archivo_existe:
-            writer.writeheader()
-
-        writer.writerow({
-            "DNI": dni,
-            "Nombre_y_Apellido": nombre,
-            "Nacionalidad": nacionalidad
-        })
-
-    print(f"Pasajero '{nombre}' agregado correctamente al archivo.")
-    input("pulse ENTER para continuar")

@@ -8,8 +8,14 @@ from app_context import arbol_pasajeros
 class Reserva:
     def __init__(self,  pasajero, vuelo):
         self.codigo = self.set_codigo() 
+        self.paquete = self.set_paquete()
         self.pasajero = pasajero
         self.vuelo = vuelo
+
+    def set_paquete(self):
+        letras = ''.join(random.choices(string.ascii_uppercase, k=2))
+        numeros = ''.join(random.choices(string.digits, k=3))
+        return f"PK{letras}{numeros}"
 
     def set_codigo(self):
         caracteres = string.ascii_letters + string.digits
@@ -18,8 +24,8 @@ class Reserva:
         return codigo_aleatorio
   
     def __str__(self):
-        return f'Codigo de reserva:{self.codigo}\nDatos del vuelo:\n{self.vuelo} \nDatos del pasajero: \n{self.pasajero}'
-
+        return (f"Paquete: {self.paquete}\nReserva: {self.codigo}\nCódigo vuelo: {self.vuelo.codigo}\nPasajero: {self.pasajero.nombre} ({self.pasajero.dni})\nVuelo: {self.vuelo.origen} → {self.vuelo.destino}")
+    
 # Lista global de reservas
 reservas = []
 
@@ -30,11 +36,24 @@ def reservar_vuelo():
         print("Pasajero no encontrado.")
         return
 
-# Mostrar aeropuertos disponibles
+    # Mostrar aeropuertos disponibles (enumerados)
+    aeropuertos = sorted(grafo.keys())
     mostrar_aeropuertos()
-    print ("copie y pegue los nombres correspondientes a los aeropuertos de Origen y Destino ")
-    origen = input("Ingrese aeropuerto de origen: ")
-    destino = input("Ingrese aeropuerto de destino: ")
+
+    try:
+        print ("Ingrese los numeros de orden de los aeropuertos")
+        num_origen = int(input("Ingrese el número del aeropuerto de origen: "))
+        num_destino = int(input("Ingrese el número del aeropuerto de destino: "))
+
+        # Convertir números a nombres
+        origen = aeropuertos[num_origen - 1]
+        destino = aeropuertos[num_destino - 1]
+
+    except (ValueError, IndexError):
+        print("Opción inválida. Intente nuevamente.")
+        input("Presione ENTER para continuar...")
+        return
+
 
 # Validar aeropuertos
     if origen not in grafo or destino not in grafo:
@@ -50,7 +69,7 @@ def reservar_vuelo():
         return
 
     print("\nRuta encontrada:", " ->".join(ruta))
-    print(" -*70")
+    print("- "*35)
 
 # Crear reservas por tramo
     for i in range(len(ruta) - 1):
@@ -69,7 +88,6 @@ def reservar_vuelo():
         else:
             print(f"No se encontró vuelo directo entre {origen_tramo} y {destino_tramo}.")
 
-
 def cancelar_reserva():
     dni = int(input("Ingrese DNI del pasajero para cancelar su reserva: "))
     pasajero = arbol_pasajeros.buscar(dni)
@@ -87,36 +105,124 @@ def cancelar_reserva():
         return
 
     print("\nReservas encontradas:")
+    paquetes = []
     for r in reservas_pasajero:
-        print(f"🔹 {r.vuelo.origen} → {r.vuelo.destino} (Código {r.codigo})")
+        if r.paquete not in paquetes:
+            paquetes.append(r.paquete)
 
-    confirm = input("\n¿Desea cancelar TODO el paquete de viaje? (s/n): ").lower()
+    print("\nPaquetes encontrados para el pasajero:")
+    for i, p in enumerate(paquetes, start=1):
+        # contar cantidad de tramos por paquete para mostrar info
+        n_tramos = sum(1 for r in reservas_pasajero if r.paquete == p)
+        print(f"{i}. {p}  (tramos: {n_tramos})")
+
+    try:
+        sel = int(input("\nSeleccione el número del paquete a cancelar (0 para abortar): "))
+    except ValueError:
+        print("Entrada inválida.")
+        input("Presione ENTER para continuar...")
+        return
+
+    if sel == 0:
+        print("Cancelación abortada.")
+        input("Presione ENTER para continuar...")
+        return
+
+    if sel < 1 or sel > len(paquetes):
+        print("Selección fuera de rango.")
+        input("Presione ENTER para continuar...")
+        return
+
+    paquete_seleccionado = paquetes[sel - 1]
+# Confirmación
+    confirm = input(f"¿Confirma cancelar TODO el paquete {paquete_seleccionado}? (s/n): ").lower()
     if confirm != "s":
         print("Cancelación abortada.")
         input("Presione ENTER para continuar...")
         return
 
-# Eliminar todas las reservas del pasajero
-    for r in reservas_pasajero:
-    # Sacar al pasajero del vuelo
-        if pasajero in r.vuelo._pasajeros:
-            r.vuelo._pasajeros.remove(pasajero)
-        reservas.remove(r)
+    # Eliminar en memoria: todas las reservas con ese paquete
+    reservas_a_eliminar = [r for r in reservas if r.paquete == paquete_seleccionado and r.pasajero.dni == dni]
 
-    print(f"Se cancelaron {len(reservas_pasajero)} reservas del pasajero {pasajero.nombre}.")
+    for r in reservas_a_eliminar:
+        # Quitar pasajero solo de ese vuelo
+        if pasajero in r.vuelo._pasajeros:
+            try:
+                r.vuelo._pasajeros.remove(pasajero)
+            except ValueError:
+                pass
+        # eliminar reserva de la lista global si está presente
+        if r in reservas:
+            reservas.remove(r)
+
+    # Eliminar del archivo CSV todas las filas con ese paquete
+    eliminar_paquete_csv(paquete_seleccionado)
+
+    print(f"Se cancelaron {len(reservas_a_eliminar)} reservas del paquete {paquete_seleccionado} para el pasajero {pasajero.nombre}.")
     input("Presione ENTER para continuar...")
 
 def guardar_reserva_csv(reserva, ruta="reservas.csv"):
     archivo_existe = os.path.isfile(ruta)
     with open(ruta, mode="a", newline='', encoding="utf-8") as archivo:
-        campos = ["Código", "Pasajero", "Origen", "Destino"]
+        campos = ["Paquete", "Código", "Vuelo", "Pasajero", "DNI", "Origen", "Destino"]
         writer = csv.DictWriter(archivo, fieldnames=campos)
         if not archivo_existe:
             writer.writeheader()
         writer.writerow({
+            "Paquete": reserva.paquete,
             "Código": reserva.codigo,
-            "Pasajero": reserva.pasajero,
+            "Vuelo": reserva.vuelo.codigo,
+            "Pasajero": reserva.pasajero.nombre,
+            "DNI": reserva.pasajero.dni,
             "Origen": reserva.vuelo.origen,
             "Destino": reserva.vuelo.destino
         })
 
+def eliminar_paquete_csv(paquete, ruta="reservas.csv"):
+    
+    if not os.path.exists(ruta):
+        print("No existe el archivo de reservas.")
+        return
+
+    reservas_restantes = []
+    eliminado = False
+
+    # Leer todas las reservas
+    with open(ruta, mode="r", newline='', encoding="utf-8") as archivo:
+        reader = csv.DictReader(archivo)
+        for fila in reader:
+            # Comparar exactamente con la columna 'Paquete' del CSV
+            if fila.get("Paquete") != paquete:
+                reservas_restantes.append(fila)
+            else:
+                eliminado = True
+
+    # Reescribir el archivo sin las filas del paquete eliminado
+    with open(ruta, mode="w", newline='', encoding="utf-8") as archivo:
+        campos = ["Paquete", "Código", "Vuelo", "Pasajero", "DNI", "Origen", "Destino"]
+        writer = csv.DictWriter(archivo, fieldnames=campos)
+        writer.writeheader()
+        writer.writerows(reservas_restantes)
+
+    if eliminado:
+        print(f"El paquete {paquete} fue eliminado del archivo.")
+    else:
+        print(f"No se encontró el paquete {paquete} en el archivo.")
+
+def cargar_reservas_csv(ruta):
+    with open(ruta, newline='', encoding='utf-8') as f:
+        lector = csv.reader(f)
+        next(lector)  # saltar encabezado
+        for fila in lector:
+            try:
+                Paquete = fila[0].strip()
+                Código = fila[1].strip()
+                Vuelo = fila[2].strip()
+                Pasajero = fila[3].strip()
+                DNI = fila[4].strip()
+                Origen = fila[5].strip()
+                Destino = fila[6].strip()
+                reservas.append((Paquete, Código, Vuelo, Pasajero, DNI, Origen, Destino))
+                
+            except (ValueError, IndexError):
+                print(f"Fila inválida: {fila}")
