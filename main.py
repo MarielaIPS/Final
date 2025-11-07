@@ -1,4 +1,5 @@
-from pasajero import ArbolPasajeros, cargar_pasajeros_csv
+#from pasajero import ArbolPasajeros, cargar_pasajeros_csv
+from arbol_pasajeros import ArbolPasajeros, cargar_pasajeros_csv
 from menu_arbol import iniciar_menu
 from app_context import arbol_pasajeros
 
@@ -13,3 +14,4 @@ if __name__ == "__main__":
         print("No se encontró el archivo de pasajeros, comenzando vacío")
  
     iniciar_menu()
+    

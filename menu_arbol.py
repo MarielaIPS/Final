@@ -1,5 +1,6 @@
 from reserva import Reserva, reservas, reservar_vuelo, cancelar_reserva
-from pasajero import Pasajero, agregar_pasajero_csv
+from pasajero import Pasajero
+from arbol_pasajeros import ArbolPasajeros, cargar_pasajeros_csv,agregar_pasajero_csv
 from grafos_vuelos import mostrar_aeropuertos, vuelos, grafo, mostrar_aeropuertos
 from app_context import arbol_pasajeros
 import os
