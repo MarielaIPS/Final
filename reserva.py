@@ -1,4 +1,5 @@
-
+import os
+import csv
 import random
 import string
 from grafos_vuelos import vuelos, grafo, dijkstra, obtener_ruta, mostrar_aeropuertos
@@ -49,6 +50,7 @@ def reservar_vuelo():
         return
 
     print("\nRuta encontrada:", " ->".join(ruta))
+    print(" -*70")
 
 # Crear reservas por tramo
     for i in range(len(ruta) - 1):
@@ -61,7 +63,9 @@ def reservar_vuelo():
             vuelo.agregar_pasajero(pasajero)
             reserva = Reserva(pasajero, vuelo)
             reservas.append(reserva)
+            guardar_reserva_csv(reserva)
             print(f"Reserva creada para tramo {origen_tramo} -> {destino_tramo}. Código: {reserva.codigo}")
+            print("- - - ")
         else:
             print(f"No se encontró vuelo directo entre {origen_tramo} y {destino_tramo}.")
 
@@ -101,3 +105,18 @@ def cancelar_reserva():
 
     print(f"Se cancelaron {len(reservas_pasajero)} reservas del pasajero {pasajero.nombre}.")
     input("Presione ENTER para continuar...")
+
+def guardar_reserva_csv(reserva, ruta="reservas.csv"):
+    archivo_existe = os.path.isfile(ruta)
+    with open(ruta, mode="a", newline='', encoding="utf-8") as archivo:
+        campos = ["Código", "Pasajero", "Origen", "Destino"]
+        writer = csv.DictWriter(archivo, fieldnames=campos)
+        if not archivo_existe:
+            writer.writeheader()
+        writer.writerow({
+            "Código": reserva.codigo,
+            "Pasajero": reserva.pasajero,
+            "Origen": reserva.vuelo.origen,
+            "Destino": reserva.vuelo.destino
+        })
+

@@ -1,6 +1,6 @@
 from reserva import Reserva, reservas, reservar_vuelo, cancelar_reserva
 from pasajero import Pasajero
-from arbol_pasajeros import ArbolPasajeros, cargar_pasajeros_csv,agregar_pasajero_csv
+from arbol_pasajeros import ArbolPasajeros, agregar_pasajero_csv
 from grafos_vuelos import mostrar_aeropuertos, vuelos, grafo, mostrar_aeropuertos
 from app_context import arbol_pasajeros
 import os
@@ -40,15 +40,6 @@ class NodoMenu:
                 print("Opción inválida.")
 
 
-
-#   OBJETOS GLOBALES DE TRABAJO
-
-#arbol_pasajeros = ArbolPasajeros()
-
-#reservas = []
-
-
-
 #   FUNCIONES DE ACCIÓN
 
 def crear_pasajero():
@@ -61,11 +52,9 @@ def crear_pasajero():
     ruta = r"pasajeros.csv"
     agregar_pasajero_csv(dni, nombre, nac, ruta)
 
-
 def listar_pasajeros():
     print("\n--- LISTADO DE PASAJEROS ---")
     arbol_pasajeros.mostrar_inorden()
-
 
 def menu_buscar_pasajero():
     os.system("cls" if os.name == "nt" else "clear")
@@ -78,7 +67,12 @@ def menu_buscar_pasajero():
     else:
         print("\nNo se encontró ningún pasajero con ese DNI.")
     
-
+def menu_eliminar_pasajero():
+    os.system("cls" if os.name == "nt" else "clear")
+    print("=== ELIMINAR PASAJERO ===")
+    dni = int(input("Ingrese DNI: "))
+    pasajero = arbol_pasajeros.eliminar(dni)
+    print(f"\nPasajero {pasajero} ELIMINADO:\n")
 
 def listar_vuelos():
     print("---------------------------------------\n")
@@ -86,8 +80,6 @@ def listar_vuelos():
     for i, aeropuerto in enumerate(vuelos ,1):
         print(f"{i:2d}. {aeropuerto}")
     print("---------------------------------------")
-
-
 
 def listar_reservas():
     print("\n--- RESERVAS ---")
@@ -97,7 +89,6 @@ def listar_reservas():
     for r in reservas:
         print(r)
         print("-" * 40)
-
 
 def menu_equipaje():
     os.system("cls" if os.name == "nt" else "clear")
@@ -151,6 +142,7 @@ menu_principal = NodoMenu("MENÚ PRINCIPAL")
 pasajeros = NodoMenu("Gestión de pasajeros")
 pasajeros.agregar_submenu(NodoMenu("Crear pasajero", crear_pasajero))
 pasajeros.agregar_submenu(NodoMenu("Listar pasajeros", listar_pasajeros))
+pasajeros.agregar_submenu(NodoMenu("Eliminar pasajeros", menu_eliminar_pasajero))
 pasajeros.agregar_submenu(NodoMenu("Buscar pasajero por DNI", menu_buscar_pasajero))
 
 # Submenú equipaje
