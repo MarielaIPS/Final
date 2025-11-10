@@ -1,6 +1,6 @@
 from reserva import Reserva, reservas, reservar_vuelo, cancelar_reserva
 from pasajero import Pasajero, eliminar_pasajero_csv, agregar_pasajero_csv
-from grafos_vuelos import mostrar_aeropuertos, vuelos, mostrar_aeropuertos
+from grafos_vuelos import mostrar_aeropuertos, vuelos
 from app_context import arbol_pasajeros
 import os
 
@@ -148,7 +148,6 @@ pasajeros.agregar_submenu(NodoMenu("Buscar pasajero por DNI", menu_buscar_pasaje
 # Submenú equipaje
 equipaje = NodoMenu("Gestión de Equipaje")
 equipaje.agregar_submenu(NodoMenu("Agregar equipaje a pasajero", menu_equipaje))
-#equipaje.agregar_submenu(NodoMenu("Eliminar equipaje a pasajero", menu_equipaje))
 
 # Submenú vuelos
 vuelos_menu = NodoMenu("Gestión de vuelos")

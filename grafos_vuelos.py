@@ -111,8 +111,8 @@ vuelos = [
 grafo = construir_grafo(vuelos)
 
 
-"""#Obtener mejor ruta 
-def calcular_vuelo(destino):
+#Obtener mejor ruta 
+"""def calcular_vuelo(destino):
     ruta = obtener_ruta(predecesores, destino)
     print("Ruta más corta:", " → ".join(ruta))
     minutos = duracion[destino]

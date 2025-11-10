@@ -2,23 +2,9 @@ Paquete,Código,Vuelo,Pasajero,DNI,Origen,Destino
 PKGF310,Njh,VRB966,Francisco Godoy,50050,Nueva York (JFK),Londres (Heathrow)
 PKGF310,p74,VNN502,Francisco Godoy,50050,Tokio (Haneda),Los Ángeles (EE.UU.)
 PKJY611,yYt,VSR626,Bruno Rodríguez,50030,Buenos Aires (Ezeiza),Santiago de Chile
-PKPU413,wzE,VYE675,David Andrade,21553,Buenos Aires (Ezeiza),Ciudad de México
-PKPU413,RC8,VBY812,David Andrade,21553,Ciudad de México,Los Ángeles (EE.UU.)
-PKPU413,ss7,VRK675,David Andrade,21553,Los Ángeles (EE.UU.),Tokio (Haneda)
-PKPU413,jHy,VSL057,David Andrade,21553,Tokio (Haneda),Hong Kong (China)
-PKPU413,Cee,VDZ096,David Andrade,21553,Hong Kong (China),Singapur (Changi)
-PKZB165,7lD,VCD987,David Andrade,21553,Buenos Aires (Ezeiza),Ciudad de México
-PKZB165,yOa,VBU046,David Andrade,21553,Ciudad de México,Los Ángeles (EE.UU.)
-PKZB165,Cfh,VCB649,David Andrade,21553,Los Ángeles (EE.UU.),Tokio (Haneda)
-PKZB165,wNo,VZI225,David Andrade,21553,Tokio (Haneda),Hong Kong (China)
-PKZB165,d7k,VNI464,David Andrade,21553,Hong Kong (China),Singapur (Changi)
-PKYY412,lZU,VND120,Valentín Ríos,50056,Buenos Aires (Ezeiza),Ciudad de México
-PKYY412,5IG,VMH851,Valentín Ríos,50056,Ciudad de México,Los Ángeles (EE.UU.)
-PKYY412,ioq,VRS250,Valentín Ríos,50056,Los Ángeles (EE.UU.),Tokio (Haneda)
-PKYY412,fbb,VJR882,Valentín Ríos,50056,Tokio (Haneda),Hong Kong (China)
-PKYY412,C5g,VIS326,Valentín Ríos,50056,Hong Kong (China),Singapur (Changi)
 PKBW108,ieQ,VRD238,Francisco Godoy,50050,Buenos Aires (Ezeiza),Ciudad de México
 PKBW108,fr3,VKZ934,Francisco Godoy,50050,Ciudad de México,Los Ángeles (EE.UU.)
 PKBW108,D38,VWE349,Francisco Godoy,50050,Los Ángeles (EE.UU.),Tokio (Haneda)
 PKBW108,HTb,VFU946,Francisco Godoy,50050,Tokio (Haneda),Hong Kong (China)
 PKBW108,7uQ,VRB848,Francisco Godoy,50050,Hong Kong (China),Singapur (Changi)
+PKLH215,JxS,VOG143,Olivia Ramos,50025,Buenos Aires (Ezeiza),São Paulo (Guarulhos)

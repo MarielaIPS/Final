@@ -2,7 +2,7 @@ import os
 import csv
 import random
 import string
-from grafos_vuelos import vuelos, grafo, dijkstra, obtener_ruta, mostrar_aeropuertos, calcular_vuelo
+from grafos_vuelos import vuelos, grafo, dijkstra, obtener_ruta, mostrar_aeropuertos
 from app_context import arbol_pasajeros
 from pasajero import Pasajero
 from vuelo import Vuelo
