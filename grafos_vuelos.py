@@ -1,8 +1,8 @@
 import heapq
 from vuelo import Vuelo
 
-# Se crea el grafo apartir de la lista de vuelos, se filtra los aeropuertos repetidos
 def construir_grafo(vuelos):
+    """ Se crea el grafo apartir de la lista de vuelos, se filtra los aeropuertos repetidos"""
     grafo = {}
     for vuelo in vuelos:
         if vuelo.origen not in grafo:
@@ -13,8 +13,8 @@ def construir_grafo(vuelos):
     return grafo
 
 
-#la funcion dijkstra se encarga de de recorrer el grafo por la ruta de menor duracion
 def dijkstra(grafo, origen):
+    "la funcion dijkstra se encarga de de recorrer el grafo por la ruta de menor duracion"
     duracion_total = {nodo: float('inf') for nodo in grafo}
     duracion_total[origen] = 0
     predecesores = {nodo: None for nodo in grafo}
@@ -45,8 +45,8 @@ def obtener_ruta(predecesores, destino):
         actual = predecesores[actual]
     return ruta
 
-#muestra la lista de aeropuertos apartir del grafo
 def mostrar_aeropuertos():
+    "muestra la lista de aeropuertos apartir del grafo"
     print("---------------------------------------\n")
     print("---Lista de aeropuertos disponibles:\n")
     for i, aeropuerto in enumerate(sorted(grafo.keys()), 1):
