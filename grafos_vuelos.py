@@ -122,3 +122,54 @@ def calcular_vuelo(destino):
     
 
 """
+def dfs(grafo, origen, destino, visitados=None, camino=None):
+    """Búsqueda en profundidad (DFS)
+El DFS explora lo más lejos posible por cada camino antes de retroceder.
+Sirve para encontrar una ruta posible entre dos nodos (no necesariamente la más corta)."""
+    if visitados is None:
+        visitados = set() #conjunto de visitados para evitar duplicacion
+    if camino is None:
+        camino = []
+        
+    visitados.add(origen)
+    camino.append(origen)
+    
+    if origen == destino:
+        return camino  # Se encontró el destino
+    
+    for vecino in grafo[origen]:
+        if vecino not in visitados:
+            resultado = dfs(grafo, vecino, destino, visitados, camino) #Llama recursivamente a dfs para continuar la búsqueda desde el vecino
+            if resultado:
+                return resultado  # Ruta encontrada
+    
+    camino.pop()  # Retroceder
+    return None  # No se encontró ruta desde este nodo
+
+ 
+ruta = dfs(grafo, 'Buenos Aires (Ezeiza)', 'Tokio (Haneda)')
+print(ruta)
+
+
+
+
+def bfs(grafo, origen, destino):
+    '''El BFS explora nivel por nivel (todas las conexiones directas primero).
+Sirve para encontrar la ruta más corta en cantidad de vuelos (no en duración).'''
+    cola = [[origen]]  # La cola contiene rutas completas
+    visitados = [origen]  # Para no repetir nodos
+    
+    while cola:
+        camino = cola.pop(0)   # Tomamos la primera ruta
+        actual = camino[-1]    # Último nodo en la ruta
+        
+        if actual == destino:
+            return camino      # Ruta encontrada
+        
+        for vecino in grafo[actual]:
+            if vecino not in visitados:
+                visitados.append(vecino)
+                nueva_ruta = camino + [vecino]  # Extiende la ruta
+                cola.append(nueva_ruta)
+    
+    return None  # No hay ruta entre origen y destino
