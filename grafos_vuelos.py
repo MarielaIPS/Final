@@ -109,10 +109,9 @@ vuelos = [
 
 # Construye el grafo
 grafo = construir_grafo(vuelos)
-# Ejecuta Dijkstra
-duracion, predecesores = dijkstra(grafo, "Buenos Aires (Ezeiza)")
 
-# Obtener mejor ruta 
+
+"""# Obtener mejor ruta 
 def calcular_vuelo(destino):
     ruta = obtener_ruta(predecesores, destino)
     print("Ruta más corta:", " → ".join(ruta))
@@ -122,6 +121,4 @@ def calcular_vuelo(destino):
     return print(f"Duracion total: {horas}h {minutos_restantes:02d}m")
     
 
-# calcular_vuelo("Sídney (Australia)")
-# print(grafo)
-
+"""
