@@ -122,6 +122,5 @@ def calcular_vuelo(destino):
     return print(f"Duracion total: {horas}h {minutos_restantes:02d}m")
     
 
-# calcular_vuelo("Sídney (Australia)")
-# print(grafo)
-
+calcular_vuelo("Sídney (Australia)")
+mostrar_aeropuertos()
