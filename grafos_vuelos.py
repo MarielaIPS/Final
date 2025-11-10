@@ -36,8 +36,8 @@ def dijkstra(grafo, origen):
     
     return duracion_total, predecesores
 
-#se obtiene la ruta []
 def obtener_ruta(predecesores, destino):
+    "se obtiene la ruta []"
     ruta = []
     actual = destino
     while actual is not None:
@@ -109,10 +109,9 @@ vuelos = [
 
 # Construye el grafo
 grafo = construir_grafo(vuelos)
-# Ejecuta Dijkstra
-duracion, predecesores = dijkstra(grafo, "Buenos Aires (Ezeiza)")
 
-# Obtener mejor ruta 
+
+"""#Obtener mejor ruta 
 def calcular_vuelo(destino):
     ruta = obtener_ruta(predecesores, destino)
     print("Ruta más corta:", " → ".join(ruta))
@@ -120,18 +119,12 @@ def calcular_vuelo(destino):
     horas = minutos // 60
     minutos_restantes = minutos % 60
     return print(f"Duracion total: {horas}h {minutos_restantes:02d}m")
-    
-
-calcular_vuelo("Sídney (Australia)")
-mostrar_aeropuertos()
-
-# calcular_vuelo("Sídney (Australia)")
-# print(grafo)
+"""
 
 def dfs(grafo, origen, destino, visitados=None, camino=None):
-    '''Búsqueda en profundidad (DFS)
+    """Búsqueda en profundidad (DFS)
 El DFS explora lo más lejos posible por cada camino antes de retroceder.
-Sirve para encontrar una ruta posible entre dos nodos (no necesariamente la más corta).'''
+Sirve para encontrar una ruta posible entre dos nodos (no necesariamente la más corta)."""
     if visitados is None:
         visitados = set() #conjunto de visitados para evitar duplicacion
     if camino is None:
@@ -156,7 +149,6 @@ Sirve para encontrar una ruta posible entre dos nodos (no necesariamente la más
 ruta = dfs(grafo, 'Buenos Aires (Ezeiza)', 'Tokio (Haneda)')
 print(ruta)
 
-
 def bfs(grafo, origen, destino):
     '''El BFS explora nivel por nivel (todas las conexiones directas primero).
 Sirve para encontrar la ruta más corta en cantidad de vuelos (no en duración).'''
@@ -177,9 +169,3 @@ Sirve para encontrar la ruta más corta en cantidad de vuelos (no en duración).
                 cola.append(nueva_ruta)
     
     return None  # No hay ruta entre origen y destino
-
-
-
-ruta2 = bfs(grafo, 'Buenos Aires (Ezeiza)', 'Tokio (Haneda)')
-print("la ruta más corta en cantidad de vuelos")
-print(ruta2)

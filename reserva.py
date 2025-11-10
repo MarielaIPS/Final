@@ -2,7 +2,7 @@ import os
 import csv
 import random
 import string
-from grafos_vuelos import vuelos, grafo, dijkstra, obtener_ruta, mostrar_aeropuertos
+from grafos_vuelos import vuelos, grafo, dijkstra, obtener_ruta, mostrar_aeropuertos, calcular_vuelo
 from app_context import arbol_pasajeros
 from pasajero import Pasajero
 from vuelo import Vuelo
@@ -69,8 +69,12 @@ def reservar_vuelo():
     if len(ruta) < 2:
         print("No se encontró ruta válida entre los aeropuertos.")
         return
-
-    print("\nRuta encontrada:", " ->".join(ruta))
+    
+   
+    minutos = duracion_total[destino]
+    horas = minutos // 60
+    minutos_restantes = minutos % 60
+    print("\nRuta encontrada:", " ->".join(ruta), f"\nDuracion: {horas}h {minutos_restantes:02d}m")
     print("- "*35)
 
     paquete = Reserva(None, None).set_paquete()
