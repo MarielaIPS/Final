@@ -1,3 +1,5 @@
+import csv
+import os
 
 class Pasajero:
     def __init__(self, dni, nombre, nac):
@@ -53,3 +55,62 @@ class Pasajero:
                 total_general+= sub_total
             self.total_en_kilos=total_general
         return  total_general
+
+def cargar_pasajeros_csv(ruta, arbol):
+    with open(ruta, newline='', encoding='utf-8') as f:
+        lector = csv.reader(f)
+        next(lector)  # saltar encabezado
+        for fila in lector:
+            try:
+                dni = int(fila[0].strip())
+                nombre = fila[1].strip()
+                nac = fila[2].strip()
+                pasajero = Pasajero(dni, nombre, nac)
+                arbol.insertar(pasajero)
+            except (ValueError, IndexError):
+                print(f"Fila inválida: {fila}")
+
+def agregar_pasajero_csv(dni, nombre, nacionalidad, ruta_csv):
+    existe = False
+    with open(ruta_csv, newline='', encoding="utf-8") as csvfile:
+        lector = csv.reader(csvfile)
+        encabezado = next(lector)  # saltar encabezado
+        for fila in lector:
+            if str(fila[0]).strip() == str(dni).strip():
+                existe = True
+                break
+
+    if existe:
+        print(f"\nEl pasajero con DNI {dni} ya existe en el archivo CSV. No se agregó.\n")
+        return
+
+    # Si no existe, lo agregamos al final del archivo
+    with open(ruta_csv, "a", newline='', encoding="utf-8") as csvfile:
+        csvfile.seek(0, 2)  # para ir al final
+        if csvfile.tell() > 0:
+            csvfile.write('\n')
+        escritor = csv.writer(csvfile, lineterminator='\n')
+        escritor.writerow([dni, nombre, nacionalidad])
+
+    print(f"\nPasajero con DNI {dni} agregado correctamente al archivo CSV.\n")
+
+def eliminar_pasajero_csv(dni, ruta_csv):
+    """Elimina del archivo CSV el pasajero con el DNI indicado."""
+    pasajeros_restantes = []
+
+    with open(ruta_csv, newline='', encoding="utf-8") as csvfile:
+        lector = csv.reader(csvfile)
+        encabezado = next(lector)  # Leemos el encabezado
+
+        for fila in lector:
+            # fila[0] es el DNI
+            if str(fila[0]).strip() != str(dni).strip():
+                pasajeros_restantes.append(fila)
+
+    # Reescribimos el archivo con los pasajeros restantes
+    with open(ruta_csv, "w", newline='', encoding="utf-8") as csvfile:
+        escritor = csv.writer(csvfile)
+        escritor.writerow(encabezado)
+        escritor.writerows(pasajeros_restantes)
+
+    print(f"\nPasajero con DNI {dni} eliminado correctamente del archivo CSV.\n")

@@ -1,7 +1,6 @@
 from reserva import Reserva, reservas, reservar_vuelo, cancelar_reserva
-from pasajero import Pasajero
-from arbol_pasajeros import ArbolPasajeros, cargar_pasajeros_csv,agregar_pasajero_csv
-from grafos_vuelos import mostrar_aeropuertos, vuelos, grafo, mostrar_aeropuertos
+from pasajero import Pasajero, eliminar_pasajero_csv, agregar_pasajero_csv
+from grafos_vuelos import mostrar_aeropuertos, vuelos, mostrar_aeropuertos
 from app_context import arbol_pasajeros
 import os
 
@@ -40,15 +39,6 @@ class NodoMenu:
                 print("Opción inválida.")
 
 
-
-#   OBJETOS GLOBALES DE TRABAJO
-
-#arbol_pasajeros = ArbolPasajeros()
-
-#reservas = []
-
-
-
 #   FUNCIONES DE ACCIÓN
 
 def crear_pasajero():
@@ -61,11 +51,9 @@ def crear_pasajero():
     ruta = r"pasajeros.csv"
     agregar_pasajero_csv(dni, nombre, nac, ruta)
 
-
 def listar_pasajeros():
     print("\n--- LISTADO DE PASAJEROS ---")
     arbol_pasajeros.mostrar_inorden()
-
 
 def menu_buscar_pasajero():
     os.system("cls" if os.name == "nt" else "clear")
@@ -78,7 +66,14 @@ def menu_buscar_pasajero():
     else:
         print("\nNo se encontró ningún pasajero con ese DNI.")
     
-
+def menu_eliminar_pasajero():
+    os.system("cls" if os.name == "nt" else "clear")
+    print("=== ELIMINAR PASAJERO ===")
+    dni = int(input("Ingrese DNI: "))
+    arbol_pasajeros.eliminar(dni)
+    print(f"\nPasajero con DNI {dni} ELIMINADO:\n")
+    ruta = r"pasajeros.csv"
+    eliminar_pasajero_csv(dni, ruta)
 
 def listar_vuelos():
     print("---------------------------------------\n")
@@ -86,8 +81,6 @@ def listar_vuelos():
     for i, aeropuerto in enumerate(vuelos ,1):
         print(f"{i:2d}. {aeropuerto}")
     print("---------------------------------------")
-
-
 
 def listar_reservas():
     print("\n--- RESERVAS ---")
@@ -97,7 +90,6 @@ def listar_reservas():
     for r in reservas:
         print(r)
         print("-" * 40)
-
 
 def menu_equipaje():
     os.system("cls" if os.name == "nt" else "clear")
@@ -143,7 +135,6 @@ def menu_equipaje():
         print(f"Equipaje '{bulto}' agregado correctamente. Total: {pasajero.total_equipaje_cantidad}")
         
 
-
 # Construye menú principal
 menu_principal = NodoMenu("MENÚ PRINCIPAL")
 
@@ -151,12 +142,13 @@ menu_principal = NodoMenu("MENÚ PRINCIPAL")
 pasajeros = NodoMenu("Gestión de pasajeros")
 pasajeros.agregar_submenu(NodoMenu("Crear pasajero", crear_pasajero))
 pasajeros.agregar_submenu(NodoMenu("Listar pasajeros", listar_pasajeros))
+pasajeros.agregar_submenu(NodoMenu("Eliminar pasajeros", menu_eliminar_pasajero))
 pasajeros.agregar_submenu(NodoMenu("Buscar pasajero por DNI", menu_buscar_pasajero))
 
 # Submenú equipaje
 equipaje = NodoMenu("Gestión de Equipaje")
 equipaje.agregar_submenu(NodoMenu("Agregar equipaje a pasajero", menu_equipaje))
-
+#equipaje.agregar_submenu(NodoMenu("Eliminar equipaje a pasajero", menu_equipaje))
 
 # Submenú vuelos
 vuelos_menu = NodoMenu("Gestión de vuelos")

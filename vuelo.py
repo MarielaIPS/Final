@@ -1,7 +1,11 @@
+import os
+import csv
+import random
+import string
 
 class Vuelo:
     def __init__(self, origen, destino,  duracion):
-        #self.codigo =codigo
+        self.codigo = self.generar_codigo()
         self.origen = origen
         self.destino = destino
         #self.fecha = fecha
@@ -21,9 +25,12 @@ class Vuelo:
         print("Los pasajeros en este vuelo son:")
         for i in   self._pasajeros:
             print(i.nombre,i.dni)      
-              
-    
-    
+         
+    def generar_codigo(self):
+        letras = ''.join(random.choices(string.ascii_uppercase, k=2))
+        numeros = ''.join(random.choices(string.digits, k=3))
+        return f"V{letras}{numeros}"
+
     def __str__(self):
-        #return f'codigo: {self.codigo} \norigen: {self.origen} \nDestino:{self.destino} \nFecha: {self.fecha}'
-        return f'Origen: {self.origen} → Destino: {self.destino} (Duracion: {self.duracion})'
+        #return f'codigo: {self.codigo} \nOrigen: {self.origen} \nDestino:{self.destino} \nFecha: {self.fecha}'
+        return f'Codigo: {self.codigo} | Origen: {self.origen} → Destino: {self.destino} (Duracion: {self.duracion})'
