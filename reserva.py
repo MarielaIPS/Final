@@ -4,6 +4,8 @@ import random
 import string
 from grafos_vuelos import vuelos, grafo, dijkstra, obtener_ruta, mostrar_aeropuertos
 from app_context import arbol_pasajeros
+from pasajero import Pasajero
+from vuelo import Vuelo
 
 class Reserva:
     def __init__(self,  pasajero, vuelo):
@@ -71,6 +73,7 @@ def reservar_vuelo():
     print("\nRuta encontrada:", " ->".join(ruta))
     print("- "*35)
 
+    paquete = Reserva(None, None).set_paquete()
 # Crear reservas por tramo
     for i in range(len(ruta) - 1):
         origen_tramo = ruta[i]
@@ -81,6 +84,7 @@ def reservar_vuelo():
         if vuelo:
             vuelo.agregar_pasajero(pasajero)
             reserva = Reserva(pasajero, vuelo)
+            reserva.paquete = paquete  # mismo paquete en todos los tramos
             reservas.append(reserva)
             guardar_reserva_csv(reserva)
             print(f"Reserva creada para tramo {origen_tramo} -> {destino_tramo}. Código: {reserva.codigo}")
@@ -187,7 +191,6 @@ def eliminar_paquete_csv(paquete, ruta="reservas.csv"):
     reservas_restantes = []
     eliminado = False
 
-    # Leer todas las reservas
     with open(ruta, mode="r", newline='', encoding="utf-8") as archivo:
         reader = csv.DictReader(archivo)
         for fila in reader:
@@ -210,19 +213,32 @@ def eliminar_paquete_csv(paquete, ruta="reservas.csv"):
         print(f"No se encontró el paquete {paquete} en el archivo.")
 
 def cargar_reservas_csv(ruta):
-    with open(ruta, newline='', encoding='utf-8') as f:
-        lector = csv.reader(f)
-        next(lector)  # saltar encabezado
-        for fila in lector:
-            try:
-                Paquete = fila[0].strip()
-                Código = fila[1].strip()
-                Vuelo = fila[2].strip()
-                Pasajero = fila[3].strip()
-                DNI = fila[4].strip()
-                Origen = fila[5].strip()
-                Destino = fila[6].strip()
-                reservas.append((Paquete, Código, Vuelo, Pasajero, DNI, Origen, Destino))
-                
-            except (ValueError, IndexError):
-                print(f"Fila inválida: {fila}")
+    try:
+        with open(ruta, newline='', encoding='utf-8') as f:
+            lector = csv.reader(f)
+            next(lector, None)  # salta encabezado
+            for fila in lector:
+                try:
+                    paquete = fila[0].strip()
+                    codigo = fila[1].strip()
+                    vuelo = fila[2].strip()
+                    nombre = fila[3].strip()
+                    dni = int(fila[4].strip())
+                    origen = fila[5].strip()
+                    destino = fila[6].strip()
+
+                    
+                    pasajero = Pasajero(dni, nombre, "")
+                    vuelo = Vuelo(origen, destino, duracion=0)
+
+                    reserva = Reserva(pasajero, vuelo)
+                    reserva.paquete = paquete
+                    reserva.codigo = codigo
+
+                    reservas.append(reserva)
+
+                except (ValueError, IndexError) as e:
+                    print(f"Error en fila: {fila} ({e})")
+
+    except FileNotFoundError:
+        print(f"No se encontró el archivo: {ruta}")

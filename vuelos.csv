@@ -1,0 +1,37 @@
+Código,Origen,Destino,Duración
+VSC120,Buenos Aires (Ezeiza),Santiago de Chile,120
+VBS140,Santiago de Chile,Buenos Aires (Ezeiza),140
+VSP160,Buenos Aires (Ezeiza),São Paulo (Guarulhos),160
+VPS180,São Paulo (Guarulhos),Buenos Aires (Ezeiza),180
+VSS190,Santiago de Chile,São Paulo (Guarulhos),190
+VSG210,São Paulo (Guarulhos),Santiago de Chile,210
+VEM530,Buenos Aires (Ezeiza),Miami (EE.UU.),530
+VEM500,Buenos Aires (Ezeiza),Ciudad de México,500
+VME600,Miami (EE.UU.),Buenos Aires (Ezeiza),600
+VSM510,São Paulo (Guarulhos),Miami (EE.UU.),510
+VMS570,Miami (EE.UU.),São Paulo (Guarulhos),570
+VMA120,Miami (EE.UU.),Atlanta (EE.UU.),120
+VAN140,Atlanta (EE.UU.),Nueva York (JFK),140
+VNL400,Nueva York (JFK),Londres (Heathrow),400
+VLN460,Londres (Heathrow),Nueva York (JFK),460
+VLP070,Londres (Heathrow),París (Charles de Gaulle),70
+VPF070,París (Charles de Gaulle),Frankfurt (Alemania),70
+VFD370,Frankfurt (Alemania),Dubái (Emiratos Árabes Unidos),370
+VDF410,Dubái (Emiratos Árabes Unidos),Frankfurt (Alemania),410
+VLT670,Londres (Heathrow),Tokio (Haneda),670
+VTL740,Tokio (Haneda),Londres (Heathrow),740
+VTH230,Tokio (Haneda),Hong Kong (China),230
+VHS210,Hong Kong (China),Singapur (Changi),210
+VSH240,Singapur (Changi),Hong Kong (China),240
+VSD440,Singapur (Changi),Doha (Qatar),440
+VDU070,Doha (Qatar),Dubái (Emiratos Árabes Unidos),70
+VDQ080,Dubái (Emiratos Árabes Unidos),Doha (Qatar),80
+VTS590,Tokio (Haneda),Sídney (Australia),590
+VST640,Sídney (Australia),Tokio (Haneda),640
+VTL530,Tokio (Haneda),Los Ángeles (EE.UU.),530
+VLT610,Los Ángeles (EE.UU.),Tokio (Haneda),610
+VLM230,Los Ángeles (EE.UU.),Ciudad de México,230
+VML240,Ciudad de México,Los Ángeles (EE.UU.),240
+VJL590,Johannesburgo (Sudáfrica),Londres (Heathrow),590
+VJM590,Johannesburgo (Sudáfrica),Miami (EE.UU.),590
+VLJ640,Londres (Heathrow),Johannesburgo (Sudáfrica),640

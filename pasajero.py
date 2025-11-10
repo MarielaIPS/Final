@@ -86,7 +86,10 @@ def agregar_pasajero_csv(dni, nombre, nacionalidad, ruta_csv):
 
     # Si no existe, lo agregamos al final del archivo
     with open(ruta_csv, "a", newline='', encoding="utf-8") as csvfile:
-        escritor = csv.writer(csvfile)
+        csvfile.seek(0, 2)  # para ir al final
+        if csvfile.tell() > 0:
+            csvfile.write('\n')
+        escritor = csv.writer(csvfile, lineterminator='\n')
         escritor.writerow([dni, nombre, nacionalidad])
 
     print(f"\nPasajero con DNI {dni} agregado correctamente al archivo CSV.\n")

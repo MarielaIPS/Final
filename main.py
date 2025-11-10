@@ -1,6 +1,6 @@
 from pasajero import cargar_pasajeros_csv
 from menu_arbol import iniciar_menu
-from reserva import cargar_reservas_csv, reservas
+from reserva import cargar_reservas_csv
 from app_context import arbol_pasajeros
 
 if __name__ == "__main__":

@@ -1,6 +1,4 @@
 Paquete,Código,Vuelo,Pasajero,DNI,Origen,Destino
-PKRN699,PFI,VBX256,David Andrade,21553,Buenos Aires (Ezeiza),Miami (EE.UU.)
-PKPL606,IyQ,VHO081,David Andrade,21553,Miami (EE.UU.),Atlanta (EE.UU.)
-PKYE159,rTG,VDE639,David Andrade,21553,Atlanta (EE.UU.),Nueva York (JFK)
-PKBA097,941,VXZ075,David Andrade,21553,Nueva York (JFK),Londres (Heathrow)
-PKMW548,A2R,VAF233,David Andrade,21553,Londres (Heathrow),París (Charles de Gaulle)
+PKGF310,Njh,VRB966,Francisco Godoy,50050,Nueva York (JFK),Londres (Heathrow)
+PKGF310,p74,VNN502,Francisco Godoy,50050,Tokio (Haneda),Los Ángeles (EE.UU.)
+PKJY611,yYt,VSR626,Bruno Rodríguez,50030,Buenos Aires (Ezeiza),Santiago de Chile
